@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Digit Software Solutions.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * @category  Dss
+ * @package   Dss_ProductAttachment
+ * @author    Extension Team
+ * @copyright Copyright (c) 2024 Digit Software Solutions. ( https://digitsoftsol.com )
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <dss_productattachment>
+            <general>
+                <enabled>0</enabled>
+                <debug>0</debug>
+            </general>
+            <attachment>
+                <tab_label>Attachments</tab_label>
+                <download_label>Download</download_label>
+                <allowed_extensions>pdf</allowed_extensions>
+            </attachment>
+        </dss_productattachment>
+    </default>
+</config>

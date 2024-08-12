@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Digit Software Solutions.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * @category  Dss
+ * @package   Dss_ProductAttachment
+ * @author    Extension Team
+ * @copyright Copyright (c) 2024 Digit Software Solutions. ( https://digitsoftsol.com )
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.details">
+            <block class="Dss\ProductAttachment\Block\Product\View\Attachment" name="product.attachment"
+                   template="Dss_ProductAttachment::product/view/attachment.phtml" group="detailed_info">
+                <arguments>
+                    <argument name="title" xsi:type="helper"
+                        helper="Dss\ProductAttachment\Helper\Data::getAttachmentTabLabel" />
+                    <argument name="sort_order" xsi:type="string">10</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

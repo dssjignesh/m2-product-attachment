@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Digit Software Solutions.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * @category  Dss
+ * @package   Dss_ProductAttachment
+ * @author    Extension Team
+ * @copyright Copyright (c) 2024 Digit Software Solutions. ( https://digitsoftsol.com )
+ */
+
+/** @var \Dss\ProductAttachment\Block\Product\View\Attachment $block */
+$attachments = $block->getAttachments();
+if (empty($attachments)) {
+    return;
+}
+$configEnable = $block->getHelper();
+?>
+<?php if ($configEnable->isActive()): ?>
+    <ul class="dss-product-attachments">
+        <?php foreach ($attachments as $attachment): ?>
+            <li>
+                <a href="<?= $escaper->escapeHtml($attachment['link']) ?>" target="_blank"
+                    title="<?= $escaper->escapeHtml($attachment['label']) ?>">
+                    <?= $escaper->escapeHtml(__($attachment['label'])) ?>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
