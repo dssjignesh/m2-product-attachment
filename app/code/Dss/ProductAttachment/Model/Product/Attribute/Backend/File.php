@@ -27,31 +27,6 @@ use Dss\ProductAttachment\Model\Config;
 class File extends AbstractBackend
 {
     /**
-     * @var Filesystem\Driver\File
-     */
-    protected $_file;
-
-    /**
-     * @var LoggerInterface
-     */
-    protected $_logger;
-
-    /**
-     * @var Filesystem
-     */
-    protected $_filesystem;
-
-    /**
-     * @var UploaderFactory
-     */
-    protected $_fileUploaderFactory;
-
-    /**
-     * @var Config
-     */
-    protected $config;
-
-    /**
      * @param LoggerInterface $logger
      * @param Filesystem $filesystem
      * @param Filesystem\Driver\File $file
@@ -59,17 +34,12 @@ class File extends AbstractBackend
      * @param Config $config
      */
     public function __construct(
-        LoggerInterface $logger,
-        Filesystem $filesystem,
-        Filesystem\Driver\File $file,
-        UploaderFactory $fileUploaderFactory,
-        Config $config
+        protected LoggerInterface $logger,
+        protected Filesystem $filesystem,
+        protected Filesystem\Driver\File $file,
+        protected UploaderFactory $fileUploaderFactory,
+        protected Config $config
     ) {
-        $this->_file = $file;
-        $this->_filesystem = $filesystem;
-        $this->_fileUploaderFactory = $fileUploaderFactory;
-        $this->_logger = $logger;
-        $this->config = $config;
     }
 
     /**
@@ -80,7 +50,7 @@ class File extends AbstractBackend
      */
     public function afterSave($object)
     {
-        $path = $this->_filesystem->getDirectoryRead(
+        $path = $this->filesystem->getDirectoryRead(
             DirectoryList::MEDIA
         )->getAbsolutePath(
             'catalog/product/attachment/'
@@ -91,8 +61,8 @@ class File extends AbstractBackend
             $fileName = $object->getData($this->getAttribute()->getName());
             $object->setData($this->getAttribute()->getName(), '');
             $this->getAttribute()->getEntity()->saveAttribute($object, $this->getAttribute()->getName());
-            if ($this->_file->isExists($path . $fileName)) {
-                $this->_file->deleteFile($path . $fileName);
+            if ($this->file->isExists($path . $fileName)) {
+                $this->file->deleteFile($path . $fileName);
             }
         }
 
@@ -104,7 +74,7 @@ class File extends AbstractBackend
 
         try {
             /** @var $uploader Uploader */
-            $uploader = $this->_fileUploaderFactory->create([
+            $uploader = $this->fileUploaderFactory->create([
                 'fileId' => $fileData['fileId']
             ]);
             $uploader->setAllowRenameFiles(true);
@@ -115,7 +85,7 @@ class File extends AbstractBackend
             $this->getAttribute()->getEntity()->saveAttribute($object, $this->getAttribute()->getName());
         } catch (\Exception $e) {
             if ($e->getCode() != Uploader::TMP_NAME_EMPTY) {
-                $this->_logger->critical($e);
+                $this->logger->critical($e);
             }
         }
 
